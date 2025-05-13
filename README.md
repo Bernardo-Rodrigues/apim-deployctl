@@ -57,14 +57,14 @@ Here’s a sample `config.json`:
 
 Explanation of Fields: 
 
-apim_zip_path: Path to the WSO2 APIM 4.x ZIP file
-version: WSO2 APIM version (must be 4.x)
-update_level: vanilla, latest, or a specific update level
-gateway.count: Number of Gateway nodes to deploy
-enable_ha: Whether to inject HA-related config for this profile
-enable_profiling: Whether to run profiling script or not
-db_driver_path: Path to MySQL JDBC connector JAR
-database block: DB connection and schema config
+- apim_zip_path: Path to the WSO2 APIM 4.x ZIP file
+- version: WSO2 APIM version (must be 4.x)
+- update_level: vanilla, latest, or a specific update level
+- gateway.count: Number of Gateway nodes to deploy
+- enable_ha: Whether to inject HA-related config for this profile
+- enable_profiling: Whether to run profiling script or not
+- db_driver_path: Path to MySQL JDBC connector JAR
+- database block: DB connection and schema config
 
 ## Running the Tool
 
