@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS ${shared_db_name} CHARACTER SET latin1;
