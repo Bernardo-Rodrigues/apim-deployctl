@@ -1,1 +1,0 @@
-CREATE DATABASE IF NOT EXISTS ${apim_db_name} CHARACTER SET latin1;
