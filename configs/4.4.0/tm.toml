@@ -1,0 +1,31 @@
+[server]
+hostname = "localhost"
+node_ip = "127.0.0.1"
+server_role = "traffic-manager"
+offset = 2
+
+[user_store]
+type = "database_unique_id"
+
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
+
+[database.shared_db]
+type = "mysql"
+url = "jdbc:mysql://${db_host}:${db_port}/${shared_db_name}?useSSL=false"
+username = "${db_user}"
+password = "${db_password}"
+
+[keystore.tls]
+file_name = "wso2carbon.jks"
+type = "JKS"
+password = "wso2carbon"
+alias = "wso2carbon"
+key_password = "wso2carbon"
+
+[truststore]
+file_name = "client-truststore.jks"
+type = "JKS"
+password = "wso2carbon"

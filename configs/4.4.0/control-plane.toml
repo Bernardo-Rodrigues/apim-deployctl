@@ -1,0 +1,68 @@
+[server]
+hostname = "localhost"
+node_ip = "127.0.0.1"
+offset = 0
+server_role="control-plane"
+
+
+[user_store]
+type = "database_unique_id"
+
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
+
+[database.apim_db]
+type = "mysql"
+url = "jdbc:mysql://${db_host}:${db_port}/${apim_db_name}?useSSL=false"
+username = "${db_user}"
+password = "${db_password}"
+
+[database.shared_db]
+type = "mysql"
+url = "jdbc:mysql://${db_host}:${db_port}/${shared_db_name}?useSSL=false"
+username = "${db_user}"
+password = "${db_password}"
+
+[keystore.tls]
+file_name = "wso2carbon.jks"
+type = "JKS"
+password = "wso2carbon"
+alias = "wso2carbon"
+key_password = "wso2carbon"
+
+[truststore]
+file_name = "client-truststore.jks"
+type = "JKS"
+password = "wso2carbon"
+
+[[apim.gateway.environment]]
+name = "Default"
+type = "hybrid"
+display_in_api_console = true
+show_as_token_endpoint_url = true
+description = "This is a hybrid gateway that handles both production and sandbox token traffic."
+service_url = "https://localhost:9447/services/"
+http_endpoint = "http://localhost:8284"
+https_endpoint = "https://localhost:8247"
+username = "${admin.username}"
+password = "${admin.password}"
+
+[apim.devportal]
+url = "https://localhost:9443/devportal"
+
+[apim.key_manager]
+service_url = "https://localhost:9443/services/"
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+
+[event_listener.properties]
+notification_endpoint = "https://localhost:9443/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
