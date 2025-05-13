@@ -99,11 +99,11 @@ func generateHAAppendix(profile string, nodeIndex int, cfg types.Config) string 
 			if nodeIndex == 1 {
 				sb.WriteString(`[apim.throttling]
 event_duplicate_url = ["tcp://localhost:5675"]
-throttle_decision_endpoints = ["tcp://localhost:5674"]\n`)
+throttle_decision_endpoints = ["tcp://localhost:5674"]`)
 			} else {
 				sb.WriteString(`[apim.throttling]
 event_duplicate_url = ["tcp://localhost:5674"]
-throttle_decision_endpoints = ["tcp://localhost:5675"]\n`)
+throttle_decision_endpoints = ["tcp://localhost:5675"]`)
 			}
 		}
 		if cpEnabled && !cpHA {
