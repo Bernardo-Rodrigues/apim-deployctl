@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 
 	"apim-deployer/types"
 )
@@ -33,7 +34,13 @@ func ApplyProfiling(cfg types.Config) error {
 
 		for i := 1; i <= count; i++ {
 			binPath := filepath.Join("deployment", fmt.Sprintf("%s-%d", dirPrefix, i), "bin")
-			script := filepath.Join(binPath, "profileSetup.sh")
+
+			scriptName := "profileSetup.sh"
+			if runtime.GOOS == "windows" {
+				scriptName = "profileSetup.bat"
+			}
+
+			script := filepath.Join(binPath, scriptName)
 
 			_ = os.Chmod(script, 0755) // ensure it's executable
 
