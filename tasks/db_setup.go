@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -57,16 +58,22 @@ func runSQLScript(user, password, host string, port int, dbName, scriptPath stri
 		return fmt.Errorf("script not found: %s", scriptPath)
 	}
 
-	var cmdStr string
-	if dbName != "" {
-		cmdStr = fmt.Sprintf("mysql -u%s -p%s -h%s -P%d %s < %s", user, password, host, port, dbName, scriptPath)
-	} else {
-		cmdStr = fmt.Sprintf("mysql -u%s -p%s -h%s -P%d < %s", user, password, host, port, scriptPath)
+	// safe to execute in all OS
+	args := []string{
+		"-u" + user,
+		"-p" + password,
+		"-h" + host,
+		"-P" + strconv.Itoa(port),
 	}
+	if dbName != "" {
+		args = append(args, dbName)
+	}
+	args = append(args, "-e", "source "+filepath.ToSlash(scriptPath)+";")
 
-	cmd := exec.Command("sh", "-c", cmdStr)
+	cmd := exec.Command("mysql", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+
 	return cmd.Run()
 }
 
@@ -91,5 +98,10 @@ func prepareSQLScriptWithPlaceholders(scriptPath string, placeholders map[string
 		return "", err
 	}
 
-	return tmpFile.Name(), nil
+	// Return absolute path
+	absPath, err := filepath.Abs(tmpFile.Name())
+	if err != nil {
+		return "", fmt.Errorf("error in absolute path: %s", err)
+	}
+	return absPath, nil
 }

@@ -28,6 +28,8 @@ func ApplyUpdate(updateLevel string, apimDir string) error {
 		scriptName = "wso2update_darwin"
 	case "linux":
 		scriptName = "wso2update_linux"
+	case "windows":
+		scriptName = "wso2update_windows"
 	default:
 		return fmt.Errorf("unsupported OS: %s", runtime.GOOS)
 	}
